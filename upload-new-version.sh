@@ -1,14 +1,14 @@
 #!/bin/bash -e
 application=${1:-target-app}
 bucket=${2:-${application}-bundles}
-tag=$(date +%F)-$(git rev-parse --short HEAD)
+tag=$(/bin/date +%F)-$(/usr/bin/git rev-parse --short HEAD)
 bundle=${application}-${tag}.zip
 
 check_version=$(aws elasticbeanstalk describe-application-versions --application-name ${application} --version-label ${tag} --query "ApplicationVersions[0]")
 
 if [ "${check_version}" = "null" ];
 then
-    git archive HEAD -o /tmp/${bundle}
+    /usr/bin/git archive HEAD -o /tmp/${bundle}
 
     aws s3 cp /tmp/${bundle} s3://${bucket}
 
