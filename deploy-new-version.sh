@@ -2,7 +2,7 @@
 environment=${1:-staging}
 application=${2:-target-app}
 count_max=${3:-30}
-tag=$(/bin/date +%F)-$(/usr/bin/git rev-parse --short HEAD)
+tag=$(date +%F)-$(git rev-parse --short HEAD)
 
 function get_status() {
     echo $(aws elasticbeanstalk describe-environment-health --environment-name ${environment} --attribute-names Status --query="Status")
