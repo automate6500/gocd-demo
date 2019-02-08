@@ -5,7 +5,7 @@ count_max=${3:-30}
 tag=$(date +%F)-$(git rev-parse --short HEAD)
 
 function get_status() {
-    echo $(aws elasticbeanstalk describe-environment-health --environment-name ${environment} --attribute-names Status --query="Status")
+    echo $(venv/bin/aws elasticbeanstalk describe-environment-health --environment-name ${environment} --attribute-names Status --query="Status")
 }
 
 status=$(get_status)
@@ -16,7 +16,7 @@ then
     exit 1
 fi
 
-aws elasticbeanstalk update-environment \
+venv/bin/aws elasticbeanstalk update-environment \
     --application-name ${application} \
     --environment-name ${environment} \
     --version-label ${tag}
