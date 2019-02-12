@@ -4,8 +4,26 @@ application=${2:-target-app}
 count_max=${3:-30}
 tag=$(date +%F)-$(git rev-parse --short HEAD)
 
+
+
+
+
+##############################################################################
+# REMOVE THE LINES BELOW AND CUSTOMIZE THE SCRIPT FOR YOUR DEPLOYMENT
+echo #########################################################################
+echo "DEPLOYMENT SCRIPT NEEDS TO BE CUSTOMIZED"
+echo #########################################################################
+exit 0
+# REMOVE THE LINES ABOVE AND CUSTOMIZE THE SCRIPT FOR YOUR DEPLOYMENT
+##############################################################################
+
+
+
+
+
+
 function get_status() {
-    echo $(venv/bin/aws elasticbeanstalk describe-environment-health --environment-name ${environment} --attribute-names Status --query="Status")
+    echo $(aws elasticbeanstalk describe-environment-health --environment-name ${environment} --attribute-names Status --query="Status")
 }
 
 status=$(get_status)
@@ -16,7 +34,7 @@ then
     exit 1
 fi
 
-venv/bin/aws elasticbeanstalk update-environment \
+aws elasticbeanstalk update-environment \
     --application-name ${application} \
     --environment-name ${environment} \
     --version-label ${tag}
